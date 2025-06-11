@@ -21,8 +21,8 @@ export function CartSummary({cart, layout}) {
           )}
         </dd>
       </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+      {/* <CartDiscounts discountCodes={cart.discountCodes} />
+      <CartGiftCard giftCardCodes={cart.appliedGiftCards} /> */}
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );

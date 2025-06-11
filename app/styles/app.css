@@ -1,7 +1,8 @@
 :root {
-  --aside-width: 400px;
+  --aside-width: 800px;
   --cart-aside-summary-height-with-discount: 300px;
-  --cart-aside-summary-height: 250px;
+  --cart-aside-summary-height: 200px;
+  --cart-aside-recommended-height: 150px;
   --grid-item-width: 355px;
   --header-height: 64px;
   --color-dark: #000;
@@ -42,6 +43,11 @@ aside {
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 200ms ease-in-out;
+}
+
+.recommended-cart-upsell-products {
+ overflow-y: auto;
+ height: auto;
 }
 
 aside header {
@@ -91,7 +97,7 @@ aside li {
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.5);
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -244,6 +250,16 @@ button.reset:hover:not(:has(> *)) {
   max-height: calc(100vh - var(--cart-aside-summary-height));
   overflow-y: auto;
   width: auto;
+  padding-right: 1rem;
+ 
+}
+
+.cart-upsell-products {
+  height: 100%;
+  max-height: calc(100vh - var(--cart-aside-recommended-height));
+  overflow-y: auto;
+  width: auto;
+ 
 }
 
 .cart-main.with-discount {
@@ -252,7 +268,7 @@ button.reset:hover:not(:has(> *)) {
 
 .cart-line {
   display: flex;
-  padding: 0.75rem 0;
+  padding: 1rem 0;
 }
 
 .cart-line img {
@@ -272,6 +288,7 @@ button.reset:hover:not(:has(> *)) {
   padding-top: 0.75rem;
   position: absolute;
   width: calc(var(--aside-width) - 40px);
+ 
 }
 
 .cart-line-quantity {
