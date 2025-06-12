@@ -7,7 +7,7 @@ import {ProductItem} from '~/components/ProductItem';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'ShopZetu | Home'}];
 };
 
 /**
@@ -62,13 +62,26 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  //console.log("How do I export this collection to another external component:", data.featuredCollection);
   return (
     <div className="home">
       <FeaturedCollection collection={data.featuredCollection} />
+       <CartUpsell featuredCollection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
+
+// I have tried exporting this . the featured collection returns undefined
+export function CartUpsell({featuredCollection}) {
+  if (!featuredCollection) return null;
+  return (
+    <div className="cart-upsell">
+       <h1>Title: {featuredCollection.title}</h1>
+    </div>
+  );
+}
+
 
 /**
  * @param {{
@@ -120,7 +133,7 @@ function RecommendedProducts({products}) {
   );
 }
 
-const FEATURED_COLLECTION_QUERY = `#graphql
+export const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {
     id
     title

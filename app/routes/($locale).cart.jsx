@@ -2,6 +2,7 @@ import {useLoaderData} from 'react-router';
 import {CartForm} from '@shopify/hydrogen';
 import {data} from '@shopify/remix-oxygen';
 import {CartMain} from '~/components/CartMain';
+import {FEATURED_COLLECTION_QUERY} from './($locale)._index';
 
 /**
  * @type {MetaFunction}
@@ -104,7 +105,16 @@ export async function action({request, context}) {
  */
 export async function loader({context}) {
   const {cart} = context;
-  return await cart.get();
+  const {collections} = await context.storefront.query(
+    FEATURED_COLLECTION_QUERY,
+  );
+
+  const cartData = await cart.get();
+
+  return {
+    cart: cartData,
+    featuredCollection: collections.nodes[0],
+  };
 }
 
 export default function Cart() {

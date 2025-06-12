@@ -1,9 +1,11 @@
-import {useOptimisticCart} from '@shopify/hydrogen';
-import {Link} from 'react-router';
+import {useOptimisticCart, Image} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
 import { Progress } from './ui/progress';
+import {Await, useLoaderData, Link} from 'react-router';
+import { FEATURED_COLLECTION_QUERY, CartUpsell } from '~/routes/($locale)._index';
+
 /**
  * The main cart component that displays the cart items and summary.
  * It is used by both the /cart route and the cart aside dialog.
@@ -14,9 +16,14 @@ export function CartMain({layout, cart: originalCart}) {
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
 
+   const featuredCollection = useLoaderData();
+ 
+  
+  //log the featured collection here from cart upsell
+
   const FREE_SHIPPING_GOAL = 200;
   const subtotal = Math.round(Number(cart?.cost?.subtotalAmount?.amount)) || 0;
-  console.log('Cart Subtotal:', subtotal);
+  //console.log('Cart Subtotal:', subtotal);
   const progressPercent = Math.min((subtotal / FREE_SHIPPING_GOAL) * 100, 100);
   const isFreeShippingUnlocked = subtotal >= FREE_SHIPPING_GOAL;
 
@@ -33,8 +40,15 @@ export function CartMain({layout, cart: originalCart}) {
       {/* left */}
       <div className="flex flex-col flex-1 border-r-1 pr-4 recommended-cart-upsell-products">
         <h3 className="text-lg font-semibold mb-4">You may also like</h3>
+         {featuredCollection && (
+        <Link to={`/collections/${featuredCollection.handle}`}>
+         
+          <h3>{featuredCollection.title}</h3>
+        </Link>
+      )}
+         <div>Collection Above</div>
        
-        <div className="grid grid-cols-2 gap-4 cart-upsell-products ">
+        {/* <div className="grid grid-cols-2 gap-4 cart-upsell-products ">
           {[...Array(6)].map((_, idx) => (
             <div key={idx} className="rounded shadow">
               <img
@@ -52,7 +66,7 @@ export function CartMain({layout, cart: originalCart}) {
               </button>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* right */}
@@ -107,6 +121,20 @@ export function CartMain({layout, cart: originalCart}) {
   );
 }
 
+function FeaturedCollection({collection}) {
+  if (!collection) return null;
+  const image = collection?.image;
+  return (
+    <Link
+      className="featured-collection"
+      to={`/collections/${collection.handle}`}
+    >
+     <div>CHECK OUT THIS COLLECTION</div>
+      <h1>{collection.title}</h1>
+    </Link>
+  );
+}
+
 /**
  * @param {{
  *   hidden: boolean;
@@ -139,3 +167,6 @@ function CartEmpty({hidden = false}) {
  */
 
 /** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */
+/** @typedef {import('storefrontapi.generated').FeaturedCollectionFragment} FeaturedCollectionFragment */
+/** @typedef {import('storefrontapi.generated').RecommendedProductsQuery} RecommendedProductsQuery */
+/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
