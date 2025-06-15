@@ -254,7 +254,6 @@ button.reset:hover:not(:has(> *)) {
  
 }
 
-
 .cart-upsell-products {
   height: 100%;
   max-height: calc(100vh - var(--cart-aside-recommended-height));
