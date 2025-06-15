@@ -2,7 +2,7 @@
   --aside-width: 800px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 200px;
-  --cart-aside-recommended-height: 150px;
+  --cart-aside-recommended-height: 100px;
   --grid-item-width: 355px;
   --header-height: 64px;
   --color-dark: #000;
@@ -253,6 +253,7 @@ button.reset:hover:not(:has(> *)) {
   padding-right: 1rem;
  
 }
+
 
 .cart-upsell-products {
   height: 100%;

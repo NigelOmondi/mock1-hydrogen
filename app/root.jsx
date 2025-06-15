@@ -15,6 +15,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
+import { CartUpsellProductsProvider } from './lib/contexts/CartUpsellProductsContext';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -166,7 +167,10 @@ export function Layout({children}) {
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout {...data}>{children}</PageLayout>
+           <CartUpsellProductsProvider>
+               <PageLayout {...data}>{children}</PageLayout>
+            </CartUpsellProductsProvider>
+            
           </Analytics.Provider>
         ) : (
           children

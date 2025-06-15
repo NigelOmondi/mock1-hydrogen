@@ -16,5 +16,5 @@
     "./**/*.js",
     "./**/*.jsx",
     ".react-router/types/**/*"
-  ]
+, "app/lib/contexts/CartUpsellProductsContext.ts"  ]
 }
